@@ -1,0 +1,30 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    environment:
+      MONITOR_DB_PATH: /data/monitor.db
+      PORT: 3000
+    ports: ["3000:3000"]
+    volumes: ["monitor-data:/data"]
+  dashboard:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+    ports: ["5173:5173"]
+    depends_on: [server]
+  react-demo:
+    build:
+      context: .
+      dockerfile: examples/react-demo/Dockerfile
+    ports: ["5174:5174"]
+    depends_on: [server]
+  vue-demo:
+    build:
+      context: .
+      dockerfile: examples/vue-demo/Dockerfile
+    ports: ["5175:5175"]
+    depends_on: [server]
+volumes:
+  monitor-data:
