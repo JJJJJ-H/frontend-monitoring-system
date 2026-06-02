@@ -1,12 +1,23 @@
 import type { MonitorPlugin, PluginContext } from '../core/plugin.ts'
 
-export function createPerformancePlugin(): MonitorPlugin {
+interface VitalMetric {
+  name: string
+  value: number
+  rating?: string
+}
+
+interface PerformanceOptions {
+  observeVitals?: (report: (metric: VitalMetric) => void) => void
+}
+
+export function createPerformancePlugin(options: PerformanceOptions = {}): MonitorPlugin {
   let observers: PerformanceObserver[] = []
 
   return {
     name: 'performance',
     setup(bus, context?: PluginContext) {
       bus.on('lifecycle:start', () => {
+        options.observeVitals?.((metric) => context?.capture('performance:vital', metric))
         if (!globalThis.PerformanceObserver) return
         for (const type of ['longtask', 'resource']) {
           try {
