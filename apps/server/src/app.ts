@@ -25,6 +25,11 @@ export function createApp(db: Database) {
           ingestBatch(db, request.body?.events)
           return { status: 202, body: { accepted: request.body.events.length } }
         }
+        if (request.method === 'GET' && url.pathname === '/api/events/batch' && url.searchParams.has('data')) {
+          const body = JSON.parse(url.searchParams.get('data')!)
+          ingestBatch(db, body.events)
+          return { status: 202, body: { accepted: body.events.length } }
+        }
         if (request.method === 'GET' && url.pathname === '/api/overview') return { status: 200, body: queryOverview(db, appId) }
         if (request.method === 'GET' && url.pathname === '/api/errors') return { status: 200, body: queryErrors(db, appId) }
         if (request.method === 'GET' && url.pathname === '/api/performance') return { status: 200, body: queryPerformance(db, appId) }

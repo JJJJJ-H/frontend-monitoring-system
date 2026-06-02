@@ -6,6 +6,15 @@ const app = createApp(createDatabase())
 const port = Number(process.env.PORT ?? 3000)
 
 createServer((request, response) => {
+  if (request.method === 'OPTIONS') {
+    response.writeHead(204, {
+      'access-control-allow-origin': '*',
+      'access-control-allow-methods': 'GET,POST,OPTIONS',
+      'access-control-allow-headers': 'content-type,x-monitor-internal',
+    })
+    response.end()
+    return
+  }
   const chunks: Buffer[] = []
   request.on('data', (chunk) => chunks.push(chunk))
   request.on('end', () => {
@@ -17,6 +26,7 @@ createServer((request, response) => {
     })
     response.writeHead(result.status, {
       'access-control-allow-origin': '*',
+      'access-control-allow-headers': 'content-type,x-monitor-internal',
       'content-type': 'application/json; charset=utf-8',
     })
     response.end(JSON.stringify(result.body))
