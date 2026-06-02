@@ -32,15 +32,7 @@ export function createMonitor(options: MonitorOptions): Monitor {
   const pageUrl = options.pageUrl ?? (() => globalThis.location?.href ?? '')
   let started = false
 
-  for (const plugin of options.plugins ?? []) {
-    try {
-      plugin.setup(bus)
-    } catch (error) {
-      options.onError?.(error)
-    }
-  }
-
-  return {
+  const monitor: Monitor = {
     bus,
     start() {
       if (started) return
@@ -71,4 +63,20 @@ export function createMonitor(options: MonitorOptions): Monitor {
       return event
     },
   }
+
+  for (const plugin of options.plugins ?? []) {
+    try {
+      plugin.setup(bus, {
+        endpoint: options.endpoint,
+        sessionId,
+        capture: (type, payload) => {
+          monitor.capture(type, payload)
+        },
+      })
+    } catch (error) {
+      options.onError?.(error)
+    }
+  }
+
+  return monitor
 }
