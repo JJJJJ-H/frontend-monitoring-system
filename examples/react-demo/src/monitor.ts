@@ -1,9 +1,9 @@
 import { createMonitor, createBehaviorPlugin, createErrorPlugin, createPerformancePlugin, createReplayPlugin, createReporterPlugin, createBeaconTransport, createFetchTransport, createImageTransport } from '@monitor/sdk'
 import { record } from 'rrweb'
-import { onCLS, onINP, onLCP } from 'web-vitals'
+import { onCLS, onINP, onLCP, type Metric } from 'web-vitals'
 
 const endpoint = 'http://localhost:3000/api/events/batch'
-const observeVitals = (report: Parameters<typeof onCLS>[0]) => { onCLS(report); onINP(report); onLCP(report) }
+const observeVitals = (report: (metric: Metric) => void) => { onCLS(report); onINP(report); onLCP(report) }
 export const monitor = createMonitor({
   appId: 'react-demo',
   endpoint,

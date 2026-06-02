@@ -67,13 +67,13 @@ export function createBehaviorPlugin(target: Window = globalThis.window): Monito
             }
           }
         }
-        const xhr = target.XMLHttpRequest?.prototype
+        const xhr = globalThis.XMLHttpRequest?.prototype
         if (xhr) {
           originalOpen = xhr.open
           originalSend = xhr.send
           xhr.open = function (method: string, url: string | URL, ...rest: any[]) {
             ;(this as any).__monitorRequest = { method, url: sanitizeUrl(String(url)), startedAt: Date.now() }
-            return originalOpen!.call(this, method, url, ...rest)
+            return (originalOpen as any).call(this, method, url, ...rest)
           }
           xhr.send = function (...args: any[]) {
             this.addEventListener('loadend', () => {
@@ -91,7 +91,7 @@ export function createBehaviorPlugin(target: Window = globalThis.window): Monito
         if (originalPushState) target.history.pushState = originalPushState
         if (originalReplaceState) target.history.replaceState = originalReplaceState
         if (originalFetch) target.fetch = originalFetch
-        const xhr = target.XMLHttpRequest?.prototype
+        const xhr = globalThis.XMLHttpRequest?.prototype
         if (xhr && originalOpen && originalSend) {
           xhr.open = originalOpen
           xhr.send = originalSend

@@ -15,7 +15,7 @@ export function createReplayPlugin(options: ReplayOptions = {}): MonitorPlugin {
     setup(bus, pluginContext) {
       context = pluginContext
       bus.on('lifecycle:start', () => {
-        stop = options.record?.({
+        const recorderStop = options.record?.({
           maskAllInputs: true,
           blockClass: 'monitor-block',
           ignoreClass: 'monitor-ignore',
@@ -27,6 +27,7 @@ export function createReplayPlugin(options: ReplayOptions = {}): MonitorPlugin {
             }
           },
         })
+        stop = typeof recorderStop === 'function' ? recorderStop : undefined
       })
       bus.on('lifecycle:stop', () => {
         stop?.()

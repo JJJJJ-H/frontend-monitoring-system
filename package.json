@@ -9,6 +9,7 @@
     "dev": "node scripts/dev.mjs"
   },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "typescript": "^5.7.0"
   },
   "workspaces": [
