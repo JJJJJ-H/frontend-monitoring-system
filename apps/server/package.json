@@ -1,0 +1,13 @@
+{
+  "name": "@monitor/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-strip-types --test src/**/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "node --experimental-strip-types src/index.ts",
+    "start": "node dist/index.js"
+  }
+}
