@@ -10,5 +10,5 @@ export function ReplayPage({ sessionId }: { sessionId: string }) {
       if (host.current && events.length) new rrwebPlayer({ target: host.current, props: { events } })
     })
   }, [sessionId])
-  return <section><h2>Session Replay</h2><p><code>{sessionId}</code></p><div ref={host} /></section>
+  return <section><h2>会话回放</h2><p><code>{sessionId}</code></p><div ref={host} /></section>
 }

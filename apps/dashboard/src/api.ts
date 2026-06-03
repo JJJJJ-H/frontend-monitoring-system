@@ -3,7 +3,7 @@ const appId = import.meta.env.VITE_APP_ID ?? 'react-demo'
 
 async function get<T>(path: string): Promise<T> {
   const response = await fetch(`${baseUrl}${path}${path.includes('?') ? '&' : '?'}appId=${encodeURIComponent(appId)}`)
-  if (!response.ok) throw new Error(`Request failed: ${response.status}`)
+  if (!response.ok) throw new Error(`请求失败：${response.status}`)
   return response.json()
 }
 
