@@ -98,7 +98,14 @@ export function queryPerformance(db: Database, appId: string) {
     .all(appId) as Array<{ type: string; timestamp: number; payload: string }>
   return rows.map((row) => {
     const payload = JSON.parse(row.payload)
-    return { type: row.type, timestamp: row.timestamp, duration: payload.duration ?? 0, name: payload.name ?? '' }
+    return {
+      type: row.type,
+      timestamp: row.timestamp,
+      value: payload.value ?? payload.duration ?? 0,
+      duration: payload.duration ?? payload.value ?? 0,
+      name: payload.name ?? '',
+      rating: payload.rating ?? '',
+    }
   })
 }
 

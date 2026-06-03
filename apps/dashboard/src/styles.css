@@ -6,3 +6,15 @@ aside button.active, aside button:hover { background: #21262d; border-color: #30
 .card { padding: 20px; background: #161b22; border: 1px solid #30363d; border-radius: 10px; } .card span { display: block; color: #8b949e; text-transform: capitalize; } .card strong { font-size: 36px; }
 table { width: 100%; border-collapse: collapse; background: #161b22; } th, td { padding: 12px; border-bottom: 1px solid #30363d; text-align: left; } code { color: #79c0ff; }
 .chart { height: 360px; padding: 20px; background: #161b22; } .empty { color: #8b949e; } .error { color: #ff7b72; } button { cursor: pointer; }
+.metric-guide, .metric-panel { margin-bottom: 20px; padding: 20px; background: #161b22; border: 1px solid #30363d; border-radius: 10px; }
+.metric-guide h3, .metric-panel h3 { margin-top: 0; }
+.metric-guide ul { margin-bottom: 0; color: #8b949e; }
+.metric-panel header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.metric-panel header p { margin: 4px 0 0; color: #8b949e; }
+.thresholds { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; color: #8b949e; }
+.metric-status { min-width: 120px; padding: 12px; border-radius: 8px; text-align: right; background: #0d1117; }
+.metric-status span { display: block; font-size: 13px; }
+.metric-status strong { font-size: 24px; }
+.metric-status.good { color: #3fb950; }
+.metric-status.warn { color: #d29922; }
+.metric-status.bad { color: #ff7b72; }

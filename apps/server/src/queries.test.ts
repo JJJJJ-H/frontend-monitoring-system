@@ -31,7 +31,7 @@ test('returns performance trends and replay events', () => {
   ])
 
   assert.deepEqual(queryPerformance(db, 'demo'), [
-    { type: 'performance:longtask', timestamp: 1710000000000, duration: 80, name: '' },
+    { type: 'performance:longtask', timestamp: 1710000000000, value: 80, duration: 80, name: '', rating: '' },
   ])
   assert.deepEqual(queryReplay(db, 'session-1'), [{ type: 2 }, { type: 3 }])
 })
