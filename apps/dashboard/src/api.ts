@@ -10,6 +10,7 @@ async function get<T>(path: string): Promise<T> {
 export const api = {
   overview: () => get<{ errors: number; sessions: number; events: number; performance: number }>('/api/overview'),
   errors: () => get<Array<{ fingerprint: string; message: string; count: number; latestTimestamp: number }>>('/api/errors'),
+  behaviors: () => get<Array<{ type: string; timestamp: number; sessionId: string; pageUrl: string; kind: string; url: string; method: string; status: number | null; duration: number | null; tag: string; text: string }>>('/api/behaviors'),
   performance: () => get<Array<{ type: string; timestamp: number; value: number; duration: number; name: string; rating: string }>>('/api/performance'),
   sessions: () => get<Array<{ sessionId: string; startedAt: number; endedAt: number; eventCount: number }>>('/api/sessions'),
   replay: (sessionId: string) => get<unknown[]>(`/api/sessions/${encodeURIComponent(sessionId)}/replay`),

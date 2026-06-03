@@ -109,6 +109,28 @@ export function queryPerformance(db: Database, appId: string) {
   })
 }
 
+export function queryBehaviors(db: Database, appId: string) {
+  const rows = db
+    .prepare("SELECT type, timestamp, session_id, page_url, payload FROM events WHERE app_id = ? AND type LIKE 'behavior:%' ORDER BY timestamp DESC LIMIT 200")
+    .all(appId) as Array<{ type: string; timestamp: number; session_id: string; page_url: string; payload: string }>
+  return rows.map((row) => {
+    const payload = JSON.parse(row.payload)
+    return {
+      type: row.type,
+      timestamp: row.timestamp,
+      sessionId: row.session_id,
+      pageUrl: row.page_url,
+      kind: payload.kind ?? '',
+      url: payload.url ?? '',
+      method: payload.method ?? '',
+      status: payload.status ?? null,
+      duration: payload.duration ?? null,
+      tag: payload.tag ?? '',
+      text: payload.text ?? '',
+    }
+  })
+}
+
 export function queryReplay(db: Database, sessionId: string): unknown[] {
   const rows = db
     .prepare("SELECT payload FROM events WHERE session_id = ? AND type = 'replay' ORDER BY timestamp ASC")

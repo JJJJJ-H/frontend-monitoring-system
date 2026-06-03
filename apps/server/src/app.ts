@@ -1,5 +1,5 @@
 import type { Database } from './db.ts'
-import { ingestBatch, queryErrors, queryOverview, queryPerformance, queryReplay, querySessions } from './db.ts'
+import { ingestBatch, queryBehaviors, queryErrors, queryOverview, queryPerformance, queryReplay, querySessions } from './db.ts'
 import { restoreFrame, saveSourceMap } from './source-map.ts'
 
 interface AppRequest {
@@ -32,6 +32,7 @@ export function createApp(db: Database) {
         }
         if (request.method === 'GET' && url.pathname === '/api/overview') return { status: 200, body: queryOverview(db, appId) }
         if (request.method === 'GET' && url.pathname === '/api/errors') return { status: 200, body: queryErrors(db, appId) }
+        if (request.method === 'GET' && url.pathname === '/api/behaviors') return { status: 200, body: queryBehaviors(db, appId) }
         if (request.method === 'GET' && url.pathname === '/api/performance') return { status: 200, body: queryPerformance(db, appId) }
         if (request.method === 'GET' && url.pathname === '/api/sessions') return { status: 200, body: querySessions(db, appId) }
         if (request.method === 'GET' && /^\/api\/sessions\/[^/]+\/replay$/.test(url.pathname)) {
