@@ -2,6 +2,7 @@ node_modules/
 dist/
 coverage/
 .worktrees/
+.tmp-logs/
 *.db
 *.db-shm
 *.db-wal
