@@ -1,4 +1,4 @@
-import { createMonitor, createBehaviorPlugin, createErrorPlugin, createPerformancePlugin, createReplayPlugin, createReporterPlugin, createBeaconTransport, createFetchTransport, createImageTransport } from '@monitor/sdk'
+import { createMonitor, createBehaviorPlugin, createErrorPlugin, createPerformancePlugin, createReplayPlugin, createReporterPlugin, createWhiteScreenPlugin, createBeaconTransport, createFetchTransport, createImageTransport } from '@monitor/sdk'
 import { record } from 'rrweb'
 import { onCLS, onINP, onLCP, type Metric } from 'web-vitals'
 
@@ -10,6 +10,7 @@ export const monitor = createMonitor({
   release: '1.0.0',
   plugins: [
     createErrorPlugin(),
+    createWhiteScreenPlugin(),
     createBehaviorPlugin(),
     createPerformancePlugin({ observeVitals }),
     createReplayPlugin({ record }),
