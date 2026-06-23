@@ -6,7 +6,8 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
-    "dev": "node scripts/dev.mjs"
+    "dev": "node scripts/dev.mjs",
+    "seed:demo": "node scripts/seed-demo-events.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
