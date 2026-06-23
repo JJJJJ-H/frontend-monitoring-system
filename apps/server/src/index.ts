@@ -1,8 +1,9 @@
 import { createServer } from 'node:http'
 import { createApp } from './app.ts'
+import { getServerConfig } from './config.ts'
 import { createDatabase } from './db.ts'
 
-const app = createApp(createDatabase())
+const app = createApp(createDatabase(), getServerConfig())
 const port = Number(process.env.PORT ?? 3000)
 
 createServer((request, response) => {
