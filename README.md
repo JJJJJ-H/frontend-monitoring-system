@@ -4,6 +4,29 @@
 
 所有 SDK 模块都通过一个带类型的全局 `EventBus` 解耦通信。Node.js 服务端负责把标准化监控数据持久化到 SQLite，提供看板查询 API，并通过内置 VLQ 解析器还原 Source Map 源码位置。
 
+## 在线演示
+
+- API Health: `https://<render-service>.onrender.com/api/health`
+- Dashboard: `https://<dashboard>.vercel.app`
+- React Demo: `https://<react-demo>.vercel.app`
+- Deployment Guide: [`docs/deployment/render-vercel-checklist.md`](docs/deployment/render-vercel-checklist.md)
+
+部署完成前，将上述域名替换为实际 Render 和 Vercel Production 地址。
+
+## 架构
+
+```text
+Browser Demo
+  -> SDK Plugins
+  -> Reporter Transports
+  -> Render Node API
+  -> SQLite Persistent Disk
+  -> Dashboard Query APIs
+  -> Vercel Dashboard
+```
+
+SDK 负责采集和上报，服务端负责规范化写入 SQLite、查询聚合和 Source Map 还原，看板负责可视化错误、性能、行为和录屏会话。
+
 ## 工作区结构
 
 ```text
@@ -39,6 +62,15 @@ docker compose up --build
 ```
 
 SQLite 数据会持久化到 `monitor-data` volume。
+
+## 低成本线上部署
+
+- `apps/server`：Render Web Service，使用 Docker 和 persistent disk。
+- `apps/dashboard`：Vercel 静态站点，`VITE_API_URL` 指向 Render API。
+- `examples/react-demo`：Vercel 静态站点，`VITE_API_URL` 指向 Render API。
+- `examples/vue-demo`：默认作为本地示例，免费额度允许时可再部署到 Vercel。
+
+完整步骤见 [`docs/deployment/render-vercel-checklist.md`](docs/deployment/render-vercel-checklist.md)。
 
 ## 五分钟演示流程
 

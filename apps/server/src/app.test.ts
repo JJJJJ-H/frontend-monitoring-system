@@ -18,7 +18,15 @@ const event = {
 test('serves health, ingestion, and overview endpoints', () => {
   const app = createApp(createDatabase(':memory:'))
 
-  assert.deepEqual(app.handle({ method: 'GET', url: '/api/health' }), { status: 200, body: { ok: true } })
+  assert.deepEqual(app.handle({ method: 'GET', url: '/api/health' }), {
+    status: 200,
+    body: {
+      ok: true,
+      service: 'pulseboard-api',
+      release: '0.1.0',
+      database: 'ready',
+    },
+  })
   assert.equal(app.handle({ method: 'POST', url: '/api/events/batch', body: { events: [event] } }).status, 202)
   assert.deepEqual(app.handle({ method: 'GET', url: '/api/overview?appId=demo' }), {
     status: 200,
