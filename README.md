@@ -27,6 +27,24 @@ Browser Demo
 
 SDK 负责采集和上报，服务端负责规范化写入 SQLite、查询聚合和 Source Map 还原，看板负责可视化错误、性能、行为和录屏会话。
 
+## 真实业务接入：MewHelp 智能客服
+
+[`mewhelp-web`](https://github.com/JJJJJ-H/mental-health-assistant)（电商智能客服 React 壳）已接入本 SDK：
+
+- `appId`: `mewhelp-web`
+- 仓库以 git submodule 引用本项目：`third_party/pulseboard`
+- 自定义业务事件：`biz:chat_start` / `biz:chat_ttfb` / `biz:chat_done` / `biz:chat_error` / `biz:interrupt`
+- 自动采集：错误、Web Vitals、`/api/chat` 请求耗时、点击、录屏（输入已脱敏）
+
+本地看板查看该应用数据：
+
+```bash
+# apps/dashboard
+VITE_APP_ID=mewhelp-web corepack pnpm --filter @monitor/dashboard dev
+```
+
+演示：打开 MewHelp 客服页（默认 `http://localhost:5176`）发送「订单 1001 的物流到哪了」，再到看板查看总览、请求与录屏会话。
+
 ## 工作区结构
 
 ```text
